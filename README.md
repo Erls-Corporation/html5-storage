@@ -13,91 +13,77 @@ How To Use
 ----------
 Just include storage.js into your project and you are ready to being using it.  Here is an example.
 
-    if(Storage.isSupported() === true) {
-    
+    var run = function() {
         var myPoint = {x: 3, y: 2, info: {name: "point"}};
         Storage.save("point", myPoint);
         
+        console.log(Storage.size());
+        
         var myPoint2 = Storage.load("point");
-        console.log(myPoint2.info.name); // Will print "point" to the console.
+        console.log(myPoint2.info.name);
         
         Storage.remove("point");
         var myPoint3 = Storage.load("point");
-        console.log(myPoint3); // Will print "null" to console.
         
-        Storage.setExeptions(true);
-        try {
-            var myPoint4 = Storage.load("point");
-        }
-        catch(StorageException) {
-            console.log("There is nothing stored under point!"); // This will print to the console.
+        if(myPoint3 === null) {
+            console.log("There is not 'point' in localStorage");
         }
         
-        Storage.save("X", 3);
         Storage.clear();
-        
-        console.log(Storage.size()); // This will print "0" to the console.
-    }
+        console.log(Storage.size());
+    };
+    
+    var die = function() {
+        alert("This browser does not support localStorage.");
+    };
 
+    Storage.isSupported(run, die);
 
 API
 ---
 > **clear()** <br/><br/>
-`Return - True if localStorage is cleared, false if not` <br/>
-`Throws - StorageException if exceptions have been set to true.`
+`return - True if localStorage is cleared, false if localStorage is not supported.` <br/>
 
 Removes all data from localStorage.
 
 ---
 
 > **isSupported( fn )** <br/><br/>
-`fn - Callback function to be triggered if localStorage is not supported (optional).` <br/> 
-`Return - True if localStorage is supported by browser, false if not.` <br/>
-`Throws - StorageException if exceptions have been set to true.`
+`param success - Callback function that is triggered if localStorage is supported by browser.` <br/>
+`param error - Callback function that is triggered if localStorage is not supported by browser.` <br/>
+`return - True if localStorage is supported, false if not.`
 
-Determines if the current browser supported localStorage
+Determines if the current browser supports localStorage
 
 ---
 
 > **load( key )** <br/><br/>
-`Paramter - key - The hash key to load localStorage data from.` <br/>
-`Return - Data from localStorage, null if no data is found` <br/>
-`Throws - StorageException if exceptions have been set to true.`
+`param key - The key to load data from in localStorage.` <br/>
+`return - The data in localStorage (primitive and object), null if no data is found.` <br/>
 
-Loads data from the localStorage (variables and objects).
+Loads data from the localStorage (primitives and objects).
 
 ---
 
 > **remove( key )** <br/><br/>
-`Parameter - key - The hash key in localStorage where the data to remove is being stored.` <br/>
-`Return - True if data is succesfully removed from localStorage, false if it fails.` <br/>
-`Throws - StorageException if exceptions have been set to true.`
+`param key - The key to delete from localStroage.` <br/>
+`return - True if the data is found and removed, false if not removed or not found.`
 
 Removes data from localStorage.
 
 ---
 
 > **save( key, data )** <br/><br/>
-`Parameter - key - The has key to save data to in localStorage.` <br/>
-`Parameter - data - The data to be saved.` <br/>
-`Return - True if data is saved successfully to localStorage, false if not.` <br/>
-`Throws - StorageException if exceptions have been set to true.`
+`param key - The key data will be saved under in the localStorage.` <br/>
+`param data - The data to be saved to localStorage (primitives or objects).` <br/>
+`return - True is data is saved successfully, false if not.`
 
-Saves data to localStorage (variables and objects).
-
----
-
-> **setExceptions( bool )** <br/><br/>
-`Parameter - bool - If true all localStorage errors will be thrown globally as StorageException.`
-
-Turn localStorage exceptions on/off. If on a StorageException will be thrown on all localStorage errors.
-
+Saves data to localStorage (primitives and objects).
 
 ---
 
 > **size()** <br/><br/>
-`Return - Number of entried currently stored in localStroage` <br/>
-`Throws - StorageException if exceptions have been set to true.`
+`return The number of elements currently in localStorage, 0 if localStorage is not supported.`
 
 Gets the number of items currently being stored in localStorage.
 
