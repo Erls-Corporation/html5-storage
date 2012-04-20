@@ -4,7 +4,7 @@ HTML5 Storage takes advantage browser localStorage by applying a safe and powerf
 
 Features
 --------
-- Detected and plan for non-supported localStorage browers.
+- Detect and plan for non-supported localStorage browers.
 - Store and load objects from localStorage.
 - Catches localStorage errors to allow for cleaner code.
 - No javascript library dependencies.
@@ -48,7 +48,7 @@ Removes all data from localStorage.
 
 ---
 
-> **isSupported( fn )** <br/><br/>
+> **isSupported( success, error )** <br/><br/>
 `param success - Callback function that is triggered if localStorage is supported by browser.` <br/>
 `param error - Callback function that is triggered if localStorage is not supported by browser.` <br/>
 `return - True if localStorage is supported, false if not.`
